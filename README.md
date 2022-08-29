@@ -16,7 +16,7 @@ cd src
 ```
 E.g.
 ```ps
-./msql2csv.ps1 -outfolder ../data/ -legal_pat ./LegalPatients.txt
+./msql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 ```
 
 ## Details
