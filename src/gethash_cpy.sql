@@ -3,7 +3,7 @@ IF OBJECT_ID('EthicalPatients','U') IS NOT NULL
 
 CREATE TABLE EthicalPatients(EthicalPatient VARCHAR(50))
 --- Patient ID's with ethical apprival should be appended to the array below
-insert into EthicalPatients values ('20170404-5085')
+insert into EthicalPatients values ('...')
 
 -- Quick-fix to only return patients for which ethical approval exists ("ethicalpatients")
 SELECT TOP (1) val.[PatientId] as 'Hash', pat.[Value] as 'LifetimeID'
