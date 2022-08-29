@@ -1,7 +1,7 @@
 # DREs - DWC Research Extraction scripts
 
 ## Overview
-A set of Powershell scripts and MSSQL queries to save to disk data extracted from Philips Data Warehouse connect in-hospital databases.
+A set of Powershell scripts and MSSQL queries to save data extracted from Philips Data Warehouse connect in-hospital databases as plain files to disk.
 
 The scripts iterate through a list of patients, extract and save the waveform and parameter data as semi-colons separated files to disk.
 At each iteration, the list of patients is refreshed to include the patients that newly checked in.
