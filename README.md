@@ -12,18 +12,18 @@ The pointer file content is used as a starting point the next time the patient i
 ## Usage
 ```ps
 cd src
-./msql2csv.ps1 -outfolder "Output data directory" -legal_pat "Path to file listing the patients to extract"
+./mssql2csv.ps1 -outfolder "Output data directory" -legal_pat "Path to file listing the patients to extract"
 ```
 E.g.
 ```ps
-./msql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
+./mssql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 ```
 
 ## Details
 
 ### Database Authentication
 By default, the authentication method is with a local account in the database instance.
-The username and the database details are hardcoded in [src/msql2csv.ps1](./src/msql2csv.ps1#L14).
+The username and the database details are hardcoded in [src/msql2csv.ps1](./src/mssql2csv.ps1#L14).
 ```ps
 $server='ServerName'	#Server instance name
 $db='InstanceName'	#Database name
