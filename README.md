@@ -49,5 +49,4 @@ This can be adapted to different context and medical staff practices by editing 
 
 - [src/patstringAttribute.sql](./src/patstringAttribute.sql)
 
-The lifetime IDs are filtered for free text strings containing only numbers
-[src/msql2csv.ps1](./src/msql2csv.ps1)
+The lifetime IDs are filtered for free text strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76))
