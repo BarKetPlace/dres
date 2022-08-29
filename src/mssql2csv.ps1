@@ -1,6 +1,6 @@
-##Powershell Extraction script. The script 
-# cd F:\20210112_Antoine\Temp\DBNEO_2022\src
-# Usage: .\mssql2csv.ps1 -outfolder F:\20210112_Antoine\Temp\DBNEO_2022\data -legal_pat F:\20210112_Antoine\Temp\DBNEO_2022\src\LegalPatients.txt
+## Powershell Extraction script. 
+# cd src
+# Usage: .\mssql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 
 
 param(
@@ -11,10 +11,10 @@ param(
 $wh=2
 $wd=pwd 			#Define working directory
 
-$server='SMONDWCDB191-SG'	#Server instance name
-$db='Philips.PatientData'	#Database name
+$server='ServerName'	#Server instance name
+$db='DatabaseName'	#Database name
+$username='UserName'		#Credential: username
 
-$username='br81'		#Credential: username
 $pass_secure = Read-Host "password for $username@$server/$db ?" -AsSecureString 
 $pwd = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
     [Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass_secure))
@@ -104,9 +104,7 @@ while($true){
                 "New"
                 $scramble= get-random -Minimum 10950 -Maximum 21900
                 $ipat_map = $mapfile.count
-                . .\get_pat_info.ps1 -gethash_cpy $gethash_cpy -extractpatient $extractpatient -pat_map_filename $pat_map_filename -scramble $scramble -server $server -db $db -username $username -pwd $pwd
-
-                
+                . .\get_pat_info.ps1 -gethash_cpy $gethash_cpy -extractpatient $extractpatient -pat_map_filename $pat_map_filename -scramble $scramble -server $server -db $db -username $username -pwd $pwd               
             }
             
             For($iquery=1;$iquery -le $ExtractQuery.count; $iquery++){
@@ -117,46 +115,36 @@ while($true){
 	            "Extraction query cpy->" + $query_cpy
 
 	            $query= $query_cpy | Foreach-Object {$_ -replace '_cpy', ''}
-                $query_datefree= $query_cpy | Foreach-Object {$_ -replace '_cpy', '_df'}
+                    $query_datefree= $query_cpy | Foreach-Object {$_ -replace '_cpy', '_df'}
 	        
-                # LOG
-                "Extraction query-> " + $query 
+                    # LOG
+                    "Extraction query-> " + $query 
 
             
-                Get-Content $query_cpy | Foreach-Object {$_ -replace 'Day,,', ("Day," + $scramble + ",")} | Set-Content $query_datefree
+                    Get-Content $query_cpy | Foreach-Object {$_ -replace 'Day,,', ("Day," + $scramble + ",")} | Set-Content $query_datefree
 
 
-		        # Define output datafile
-                $tmp_str=[io.path]::GetFilenameWithoutExtension($query)
+		    # Define output datafile
+                    $tmp_str=[io.path]::GetFilenameWithoutExtension($query)
 
         
-		        $fulldatafile= $output_folder + "\pat$ipat_map\" + "pat" + $ipat_map + "_" + $tmp_str + ".csv"
+		    $fulldatafile= $output_folder + "\pat$ipat_map\" + "pat" + $ipat_map + "_" + $tmp_str + ".csv"
 
  
-                # Check if pat output folder exists
-                If(!(test-path "$output_folder\pat$ipat_map"))
-                {
-                    New-Item -ItemType Directory -Force "$output_folder\pat$ipat_map"
-                }
+                    # Check if pat output folder exists
+                    If(!(test-path "$output_folder\pat$ipat_map")) {
+                        New-Item -ItemType Directory -Force "$output_folder\pat$ipat_map"
+                    }
 
-                # Check if patient is finished
-                #If(!(test-path ($fulldatafile -replace '.csv','_done.txt'))){
+                    # Check if patient is finished
+                    #If(!(test-path ($fulldatafile -replace '.csv','_done.txt'))){
 		    
-                # Specify patient in query file
-		        Get-Content $query_datefree | Foreach-Object {$_ -replace '__clean_pn__', ("'"+$clean_pn+"'")} | Set-Content $query
+                    # Specify patient in query file
+		    Get-Content $query_datefree | Foreach-Object {$_ -replace '__clean_pn__', ("'"+$clean_pn+"'")} | Set-Content $query
                    
                    
-                . .\perform_query.ps1 -query $query -fulldatafile $fulldatafile -logfile $logfile -mapfile $pat_map_filename -patstartdate $pat_start_date.start_date -server $server -db $db -username $username -pwd $pwd
-                  
-               #}
-               #else {
-               #     $nfinished=$nfinished+0.5
-               #}
+                    . .\perform_query.ps1 -query $query -fulldatafile $fulldatafile -logfile $logfile -mapfile $pat_map_filename -patstartdate $pat_start_date.start_date -server $server -db $db -username $username -pwd $pwd
 
-
-               # wait five minutes to allow enough data to arrive
-               #start-sleep -s 300
-           
                 $nfinished
 
             }#QUERIES
@@ -165,7 +153,7 @@ while($true){
             "skip: tolvan tolvansson the test patient flooding the database"
        }
 
-       # LOG
+       # LOG, line break
        "" 
     }#Patients
 
@@ -177,7 +165,6 @@ while($true){
     write-output "$(Get-Date) No more stored data, wait $wh h..."
     $waiting_time_s= $wh*60*60
     Start-Sleep -s $waiting_time_s
-        
-    #}
+      
 }# While true       
 
