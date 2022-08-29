@@ -43,7 +43,11 @@ In the case of authentication delegated to the Windows authenticator on the data
 
 ### Patient identification
 
-DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors. This can be adapted to different context and medical staff practices by editing the query:
+DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors.
+
+This can be adapted to different context and medical staff practices by editing the query:
 
 - [src/patstringAttribute.sql](./src/patstringAttribute.sql)
 
+The lifetime IDs are filtered for free text strings containing only numbers
+[src/msql2csv.ps1](./src/msql2csv.ps1)
