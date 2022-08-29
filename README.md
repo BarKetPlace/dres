@@ -48,4 +48,6 @@ This can be adapted to different context and medical staff practices by editing 
 
 - [src/patstringAttribute.sql](./src/patstringAttribute.sql)
 
-The lifetime IDs are filtered for free text strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76))
+For this make sure that the staff habits of entering IDs on the monitors matches with the entries expected in the `External_PatientStringAttribute` view.
+
+In our case we rely on the lifetime ID field. The free text IDs are filtered for strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76)). Again this should be adapted to each context.
