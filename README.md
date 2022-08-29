@@ -12,7 +12,7 @@ The pointer file content is used as a starting point the next time the patient i
 ## Usage
 ```ps
 cd src
-./msql2csv.ps1 -outfolder <Output data directory> -legal_pat <Path to file listing the patients to extract>
+./msql2csv.ps1 -outfolder "Output data directory" -legal_pat "Path to file listing the patients to extract"
 ```
 
 ## Details
