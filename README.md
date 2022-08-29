@@ -2,8 +2,8 @@
 
 ## Usage
 ```powershell
-$ cd src
-$ ./msql2csv.ps1 -outfolder <data directory> -legal_pat <path to file listing the patients to extract:w>
+cd src
+./msql2csv.ps1 -outfolder <data directory> -legal_pat <path to file listing the patients to extract>
 ```
 
 ## Overview
