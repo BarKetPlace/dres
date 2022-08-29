@@ -11,10 +11,10 @@ param(
 $wh=2
 $wd=pwd 			#Define working directory
 
-$server='SMONDWCDB191-SG'	#Server instance name
-$db='Philips.PatientData'	#Database name
+$server='ServberName'	#Server instance name
+$db='DatabaseName'	#Database name
+$username='UserName'		#Credential: username
 
-$username='br81'		#Credential: username
 $pass_secure = Read-Host "password for $username@$server/$db ?" -AsSecureString 
 $pwd = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
     [Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass_secure))
