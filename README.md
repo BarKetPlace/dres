@@ -16,15 +16,14 @@ cd src
 ```
 
 ## Details
-
-**Patient identification** 
+### Patient identification
 
 - DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors. This can be adapted to different context and medical staff practices by editing the query.
 
 - Query: [src/patstringAttribute.sql](./src/patstringAttribute.sql)
 
 
-**Database Authentication**
+### Database Authentication
 By default, the authentication method is with a local account in the database instance.
 The username and the database details are hardcoded in [src/msql2csv.ps1](./src/msql2csv.ps1).
 ```ps
