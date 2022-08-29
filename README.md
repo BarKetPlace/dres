@@ -19,9 +19,8 @@ E.g.
 ./mssql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 ```
 
-## Details
 
-### Database Authentication
+## Database Authentication
 By default, the authentication method is with a local account in the database instance.
 The username and the database details are hardcoded in [src/msql2csv.ps1](./src/mssql2csv.ps1#L14).
 ```ps
@@ -41,7 +40,7 @@ In the case of authentication delegated to the Windows authenticator on the data
 - [src/get_pat_info.ps1](./src/get_pat_info.ps1#L16)
 
 
-### Patient identification
+## Patient identification
 
 DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors.
 
