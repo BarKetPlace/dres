@@ -34,10 +34,9 @@ The password to the user account is passed via a prompted:
 $pwd = [Runtime.InteropServices.Marshal]::PtrToStringAuto(  [Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass_secure)  )
 ```
 
-In the case of authentication delegated to the Windows authenticator on the database sever, simply remove the `-Username $username -Password $pwd` options in the `invoke-sqlcmd` command of these files:
-- [src/perform_query.ps1](./src/perform_query.ps1#L85)
-- [src/build_pat_list.ps1](./src/build_pat_list.ps1#L15)
-- [src/get_pat_info.ps1](./src/get_pat_info.ps1#L16)
+In the case of authentication delegated to the Windows authenticator on the database sever, 
+-  remove the `-Username $username -Password $pwd` options in the `invoke-sqlcmd` command of these files: [src/perform_query.ps1](./src/perform_query.ps1#L85), [src/build_pat_list.ps1](./src/build_pat_list.ps1#L15) and [src/get_pat_info.ps1](./src/get_pat_info.ps1#L16)
+-  comment the prompt [src/msql2csv.ps1](./src/mssql2csv.ps1#L19)
 
 
 ## Patient identification
