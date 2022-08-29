@@ -11,7 +11,7 @@ param(
 $wh=2
 $wd=pwd 			#Define working directory
 
-$server='ServberName'	#Server instance name
+$server='ServerName'	#Server instance name
 $db='DatabaseName'	#Database name
 $username='UserName'		#Credential: username
 
