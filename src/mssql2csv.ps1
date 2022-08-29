@@ -1,6 +1,6 @@
-##Powershell Extraction script. The script 
-# cd F:\20210112_Antoine\Temp\DBNEO_2022\src
-# Usage: .\mssql2csv.ps1 -outfolder F:\20210112_Antoine\Temp\DBNEO_2022\data -legal_pat F:\20210112_Antoine\Temp\DBNEO_2022\src\LegalPatients.txt
+## Powershell Extraction script. 
+# cd src
+# Usage: .\mssql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 
 
 param(
