@@ -3,6 +3,7 @@ DWC databases are setup in hospital subnetworks inaccessible from outside resear
 Developing multiple database mirrors in different subnetworks requires investments not all hospital can afford.
 Also, buying hardware and training IT staff to maintain and administer such systems is not feasible everywhere.
 To enable data extraction for research for a large of institution, we developed simple scripts to continuously extract, transfer and pre-process monitor data from DWC.
+
 The scripts are designed to be robust to network interruption and un-expected machine shutdown.
 It is assumed that standard software are provided on the database servers and intermediade machines (See the [Requirements](./README.md#L9)  section for details).
 
