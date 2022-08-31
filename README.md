@@ -77,7 +77,7 @@ A set of powershell script to continuously encrypt and transfer data extracted f
 The files extracted above are plain text and might contain sensitive information.
 We perform asymetric encryption with GPG (GNU Privacy Guard).
 
-# LICENSING
+## LICENSE
 All hospital monitoring system have different installations specificities.
 To enable a wide usage we believe that any variation of these script to adapt to a new IT environment should remain open source.
 We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
