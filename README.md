@@ -5,7 +5,7 @@ Also, buying hardware and training IT staff to maintain and administer such syst
 To enable data extraction for research for a large of institution, we developed simple scripts to continuously extract, transfer and pre-process monitor data from DWC.
 
 The scripts are designed to be robust to network interruption and un-expected machine shutdown.
-It is assumed that standard software are provided on the database servers and intermediade machines (See the [Requirements](./README.md#L9)  section for details).
+It is assumed that standard software are provided on the database servers and intermediade machines (See the [Requirements](./README.md#requirements)  section for details).
 
 ## Requirements
 
