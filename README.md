@@ -63,8 +63,15 @@ This can be adapted to different context and medical staff practices by editing 
 For this make sure that the staff habits of entering IDs on the monitors matches with the entries expected in the `External_PatientStringAttribute` view.
 
 In our case we rely on the lifetime ID field. The free text IDs are filtered for strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76)). Again this should be adapted to each context.
+
+
 ## Transfer overview
 A set of powershell script to continuously encrypt and transfer data extracted from DWC.
+
+### Usage
+```ps
+.\sync_full_enc.ps1 -sourcePath "..\data" -destPath "..\remotedata" -cut "remove source file" -wh "wait x hours after completion"
+```
 
 ### Encryption
 The files extracted above are plain text and might contain sensitive information.
