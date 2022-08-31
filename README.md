@@ -20,18 +20,16 @@ The pointer file content is used as a starting point the next time the patient i
 ### Usage
 ```ps
 cd src
-./msql2csv.ps1 -outfolder "Output data directory" -legal_pat "Path to file listing the patients to extract"
+./mssql2csv.ps1 -outfolder "Output data directory" -legal_pat "Path to file listing the patients to extract"
 ```
 E.g.
 ```ps
-./msql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
+./mssql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 ```
 
-### Details
-
-#### Database Authentication
+## Database Authentication
 By default, the authentication method is with a local account in the database instance.
-The username and the database details are hardcoded in [src/msql2csv.ps1](./src/msql2csv.ps1#14).
+The username and the database details are hardcoded in [src/msql2csv.ps1](./src/mssql2csv.ps1#L14).
 ```ps
 $server='ServerName'	#Server instance name
 $db='InstanceName'	#Database name
@@ -49,7 +47,10 @@ In the case of authentication delegated to the Windows authenticator on the data
 - [src/get_pat_info.ps1](./src/get_pat_info.ps1#16)
 
 
-#### Patient identification
+
+## Patient identification
+
+DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors.
 
 DWC uses an internal patient unique identifier.
 The scripts read the information entered in the lifetimeID field of monitors.
@@ -57,16 +58,13 @@ This can be adapted to different context and medical staff practices by editing 
 
 - [src/patstringAttribute.sql](./src/patstringAttribute.sql)
 
-The lifetime IDs are filtered for free text strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76))
 
+For this make sure that the staff habits of entering IDs on the monitors matches with the entries expected in the `External_PatientStringAttribute` view.
+
+In our case we rely on the lifetime ID field. The free text IDs are filtered for strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76)). Again this should be adapted to each context.
 ## Transfer overview
 A set of powershell script to continuously encrypt and transfer data extracted from DWC.
 
 ### Encryption
 The files extracted above are plain text and might contain sensitive information.
 We perform asymetric encryption with GPG (GNU Privacy Guard).
-
-
-
-
-
