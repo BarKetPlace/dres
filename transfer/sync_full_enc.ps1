@@ -1,40 +1,12 @@
 ﻿param(
 [string]$sourcePath,
 [string]$destPath,
-[boolean]$cut,       #  Cut files from sourcePath (true or false)
+[boolean]$cut,       #  Cut files from sourcePath (1 or 0)
 [float]$wh           #  Stand-by time in hours
 
 )
 
-# cd C:\Users\br81\Desktop\sync_scripts
-
-
-# 2022
-# Usage: .\sync_full_enc.ps1 -sourcePath W:\DBNEO_2022\data -destPath Y:\Private\patients_data\data_monitor_2022__NEO -cut 1 -wh 1
-
-# Usage: .\sync_full_enc.ps1 -sourcePath W:\DBRSV_2022\data -destPath Y:\Private\patients_data\data_monitor_2022__RSV -cut 1 -wh 1
-
-
-
-# 2021
-# Usage: .\sync_full_enc.ps1 -sourcePath X:\DBNEO_2021\data -destPath Y:\Private\patients_data\data_monitor_2021__NEO_1901 -cut 1 -wh 1
-
-# Usage: .\sync_full_enc.ps1 -sourcePath W:\DBNEO_2021\data -destPath Y:\Private\patients_data\data_monitor_2021__NEO_191SG -cut 1 -wh 1
-
-# Usage: .\sync_full_enc.ps1 -sourcePath W:\DBCOVID_2021\data -destPath Y:\Private\patients_data\data_monitor_2021__COVID_191SG_DB2 -cut 1 -wh 1
-
-# Usage: .\sync_full_enc.ps1 -sourcePath W:\DBOP_2021\data -destPath Y:\Private\patients_data\data_monitor_2021__OP_191SG -cut 1 -wh 1
-
-# Usage: .\sync_full_enc.ps1 -sourcePath W:\DBRSV\data -destPath Y:\Private\patients_data\data_monitor_2021__RSV -cut 1 -wh 1
-
-
-#### OLD
-
-# Usage: C:\Users\br81\Desktop\sync_scripts\sync_new.ps1 -sourcePath X:\data\ -destPath Y:\Private\patients_data\data_monitor\ -cut 1 -wh 1
-# Usage: .\sync_full_enc.ps1 -sourcePath X:\DBCOVID_H\data -destPath Y:\Private\patients_data\data_monitor_2021_COVID_1901 -cut 1 -wh 1
-
-# Usage: C:\Users\br81\Desktop\sync_scripts\sync_new.ps1 -sourcePath W:\DBSQUEEZE\data\ -destPath Y:\Private\patients_data\data_monitor_squeeze\ -cut 1 -wh 1
-# Usage: .\sync_full_enc.ps1 -sourcePath W:\DBSQUEEZE\data -destPath Y:\Private\patients_data\data_monitor_squeeze -cut 1 -wh 1
+# Usage: .\sync_full_enc.ps1 -sourcePath "..\data" -destPath "..\remotedata" -cut "remove source file" -wh "wait x hours after completion"
 
 
 # $sourcePath = convert-path $sourcePath

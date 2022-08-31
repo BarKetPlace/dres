@@ -1,6 +1,14 @@
 # DREs - DWC Research Extraction scripts
+DWC databases are setup in hospital subnetworks inaccessible from outside research organisation subnetworks.
+Developing multiple database mirrors in different subnetworks requires investments not all hospital can afford.
+Also, buying hardware and training IT staff to maintain and administer such systems is not feasible everywhere.
+To enable data extraction for research for a large of institution, we developed simple scripts to continuously extract, transfer and pre-process monitor data from DWC.
+The scripts are designed to be robust to network interruption and un-expected machine shutdown.
+It is assumed that standard software are provided on the database servers and intermediade machines (See the [Requirements](./README.md#L9)  section for details).
 
-## Overview
+## Requirements
+
+## Extraction overview
 A set of Powershell scripts and MSSQL queries to save data extracted from Philips Data Warehouse connect in-hospital databases as plain files to disk.
 
 The scripts iterate through a list of patients, extract and save the waveform and parameter data as semi-colons separated files to disk.
@@ -9,7 +17,7 @@ For each patient, the scripts save the last encountered timestamp in a pointer f
 The pointer file content is used as a starting point the next time the patient is encountered.
 
 
-## Usage
+### Usage
 ```ps
 cd src
 ./msql2csv.ps1 -outfolder "Output data directory" -legal_pat "Path to file listing the patients to extract"
@@ -19,9 +27,9 @@ E.g.
 ./msql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 ```
 
-## Details
+### Details
 
-### Database Authentication
+#### Database Authentication
 By default, the authentication method is with a local account in the database instance.
 The username and the database details are hardcoded in [src/msql2csv.ps1](./src/msql2csv.ps1#14).
 ```ps
@@ -35,18 +43,30 @@ The password to the user account is passed via a prompted:
 $pwd = [Runtime.InteropServices.Marshal]::PtrToStringAuto(  [Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass_secure)  )
 ```
 
-In the case of authentication delegated to the Windows authenticator on the database sever, simply remove the `-Username $username -Password $pwd` options in the `invoke-sqlcmd` command of these files:
+In the case of authentication delegated to the Windows authenticator on the database server, simply remove the `-Username $username -Password $pwd` options in the `invoke-sqlcmd` command of these files:
 - [src/perform_query.ps1](./src/perform_query.ps1#85)
 - [src/build_pat_list.ps1](./src/build_pat_list.ps1#15)
 - [src/get_pat_info.ps1](./src/get_pat_info.ps1#16)
 
 
-### Patient identification
+#### Patient identification
 
-DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors.
-
+DWC uses an internal patient unique identifier.
+The scripts read the information entered in the lifetimeID field of monitors.
 This can be adapted to different context and medical staff practices by editing the query:
 
 - [src/patstringAttribute.sql](./src/patstringAttribute.sql)
 
 The lifetime IDs are filtered for free text strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76))
+
+## Transfer overview
+A set of powershell script to continuously encrypt and transfer data extracted from DWC.
+
+### Encryption
+The files extracted above are plain text and might contain sensitive information.
+We perform asymetric encryption with GPG (GNU Privacy Guard).
+
+
+
+
+
