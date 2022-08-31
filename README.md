@@ -1,5 +1,5 @@
 # DREs - DWC Research Extraction scripts
-DWC databases are setup in hospital subnetworks inaccessible from outside research organisation subnetworks.
+Data Warehouse Connect databases are setup in hospital subnetworks inaccessible to outside research organisation subnetworks.
 Developing multiple database mirrors in different subnetworks requires investments not all hospital can afford.
 Also, buying hardware and training IT staff to maintain and administer such systems is not feasible everywhere.
 To enable data extraction for research for a large of institution, we developed simple scripts to continuously extract, transfer and pre-process monitor data from DWC.
