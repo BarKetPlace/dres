@@ -1,13 +1,17 @@
 # DREs - DWC Research Extraction scripts
 Data Warehouse Connect (DWC) databases are setup in hospital subnetworks inaccessible to outside research organisation subnetworks.
-Developing multiple database mirrors in different subnetworks requires investments not all hospital can afford.
-Also, buying hardware and training IT staff to maintain and administer such systems is not feasible everywhere.
+Buying hardware and training IT staff to maintain and administer multiple database mirrors in different subnetworks requires investments not all hospitals can afford.
 To enable data extraction for research for a large of institution, we developed simple scripts to continuously extract, transfer and pre-process monitor data from DWC.
 
 The scripts are designed to be robust to network interruption and un-expected machine shutdown.
-It is assumed that standard software are provided on the database servers and intermediade machines (See the [Requirements](./README.md#requirements)  section for details).
+It is assumed that standard Windows software are provided on the database servers and intermediade machines. 
+See the **Requirements** subsections for details.
 
-## Requirements
+## LICENSE
+All hospital monitoring systems have different installations environment and specificities.
+To enable a wide usage, we believe that any variation of these scripts, required to adapt them to a new IT environment should remain open source.
+We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
+
 
 ## Extraction overview
 A set of Powershell scripts and MSSQL queries to save data extracted from Philips Data Warehouse connect in-hospital databases as plain files to disk.
@@ -17,6 +21,11 @@ At each iteration, the list of patients is refreshed to include the patients tha
 For each patient, the scripts save the last encountered timestamp in a pointer file.
 The pointer file content is used as a starting point the next time the patient is encountered.
 
+### Requirements 
+- Runs on the server with a DWC instance
+- Powershell
+  - `invoke-sqlcmd`
+- Read and write to disk
 
 ### Usage
 ```ps
@@ -28,8 +37,8 @@ E.g.
 ./mssql2csv.ps1 -outfolder ..\data\ -legal_pat .\LegalPatients.txt
 ```
 
-## Database Authentication
-By default, the authentication method is with a local account in the database instance.
+### Database Authentication
+By default, authentication is based on a local database instance account.
 The username and the database details are hardcoded in [src/msql2csv.ps1](./src/mssql2csv.ps1#L14).
 ```ps
 $server='ServerName'	#Server instance name
@@ -42,14 +51,14 @@ The password to the user account is passed via a prompted:
 $pwd = [Runtime.InteropServices.Marshal]::PtrToStringAuto(  [Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass_secure)  )
 ```
 
-In the case of authentication delegated to the Windows authenticator on the database server, simply remove the `-Username $username -Password $pwd` options in the `invoke-sqlcmd` command of these files:
+If the database authentication is delegated to the Windows authenticator on the database server, remove the `-Username $username -Password $pwd` options in the `invoke-sqlcmd` command of these files:
 - [src/perform_query.ps1](./src/perform_query.ps1#85)
 - [src/build_pat_list.ps1](./src/build_pat_list.ps1#15)
 - [src/get_pat_info.ps1](./src/get_pat_info.ps1#16)
 
 
 
-## Patient identification
+### Patient identification
 
 DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors.
 
@@ -68,16 +77,20 @@ In our case we rely on the lifetime ID field. The free text IDs are filtered for
 ## Transfer overview
 A set of powershell script to continuously encrypt and transfer data extracted from DWC.
 
+### Requirement
+- Can run on an intermediate Windows machine 
+- gnugpg v 
+- Read from disk where the data are extracted from
+- Write on another partition
+- Public GPG key
+- Powershell, kleopatra (for key storage), gnugpg.exe
+
 ### Usage
 ```ps
 .\sync_full_enc.ps1 -sourcePath "..\data" -destPath "..\remotedata" -cut "remove source file" -wh "wait x hours after completion"
 ```
 
 ### Encryption
-The files extracted above are plain text and might contain sensitive information.
+The files extracted so far are plain text and might contain sensitive information.
 We perform asymetric encryption with GPG (GNU Privacy Guard).
 
-## LICENSE
-All hospital monitoring system have different installations specificities.
-To enable a wide usage we believe that any variation of these script to adapt to a new IT environment should remain open source.
-We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
