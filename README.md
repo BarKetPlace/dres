@@ -95,9 +95,9 @@ A set of powershell script to continuously encrypt and transfer data extracted f
 **Software**
 - Powershell
 - GPG for windows: [gpg4win](https://gpg4win.org/download.html) from [GNU Privacy Guard](https://gnupg.org/index.html)
-  - ```ps1
+  ```ps
   gpg --version
-  v...
+  v ...
   ```
 - Certificate manager and GUI for GPG [Kleopatra](https://www.openpgp.org/software/kleopatra/)
 - A trusted public GPG key (the complementary private key will be used for decryption)
