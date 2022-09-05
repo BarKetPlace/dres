@@ -100,11 +100,11 @@ A set of powershell script to continuously encrypt and transfer data extracted f
   v ...
   ```
 - Certificate manager and GUI for GPG [Kleopatra](https://www.openpgp.org/software/kleopatra/)
-- A trusted public GPG key (the complementary private key will be used for decryption)
+
 
 **Permission**
 - Read from disk where the data are extracted from and write on another partition
-
+- A trusted public GPG key (the complementary private key will be used for decryption)
 
 ### Usage
 ```ps
