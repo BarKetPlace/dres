@@ -95,6 +95,10 @@ A set of powershell script to continuously encrypt and transfer data extracted f
 **Software**
 - Powershell
 - GPG for windows: [gpg4win](https://gpg4win.org/download.html) from [GNU Privacy Guard](https://gnupg.org/index.html)
+  - ```ps1
+  gpg --version
+  v...
+  ```
 - Certificate manager and GUI for GPG [Kleopatra](https://www.openpgp.org/software/kleopatra/)
 - A trusted public GPG key (the complementary private key will be used for decryption)
 
@@ -110,6 +114,8 @@ A set of powershell script to continuously encrypt and transfer data extracted f
 ### Encryption
 The files extracted so far are plain text and might contain sensitive information.
 We perform asymetric encryption with GPG (GNU Privacy Guard).
+The data encryption is done at [./transfer/enc_dec_gpg_data.ps1#L25](./transfer/enc_dec_gpg_data.ps1#L25).
+The patient map file is encrypted similarly at [./transfer/enc_dec_gpg.ps1#L17](./transfer/enc_dec_gpg.ps1#L17)
 
 
 ## Parsing overview
