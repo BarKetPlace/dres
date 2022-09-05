@@ -12,6 +12,11 @@ All hospital monitoring systems have different installations environment and spe
 To enable a wide usage, we believe that any variation of these scripts, required to adapt them to a new IT environment should remain open source.
 We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
 
+## Content
+There are three sets of scripts for different pipeline operation
+- [Extraction](./README.md#extraction-overview)
+- [Transfer](./README.md#transfer-overview)
+- [Parsing](./README.md#parsing-overview)
 
 ## Extraction overview
 A set of Powershell scripts and MSSQL queries to save data extracted from Philips Data Warehouse connect in-hospital databases as plain files to disk.
@@ -94,3 +99,5 @@ A set of powershell script to continuously encrypt and transfer data extracted f
 The files extracted so far are plain text and might contain sensitive information.
 We perform asymetric encryption with GPG (GNU Privacy Guard).
 
+
+## Parsing overview
