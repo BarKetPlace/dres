@@ -1,3 +1,5 @@
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 # DREs - DWC Research Extraction scripts
 Data Warehouse Connect (DWC) databases are setup in hospital subnetworks inaccessible to outside research organisation.
 Buying hardware and training IT staff to maintain and administer multiple database mirrors in different subnetworks requires investments not all hospitals can afford.
