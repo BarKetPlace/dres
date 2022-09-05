@@ -79,24 +79,28 @@ For this make sure that the staff habits of entering IDs on the monitors matches
 In our case we rely on the lifetime ID field. The free text IDs are filtered for strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76)). Again this should be adapted to each context.
 
 ### Query templates
-The template extraction queries are
+The template extraction queries for LF (parameter) and HF (waveform) data are:
 - [src/export_HF_cpy.sql](./src/export_HF_cpy.sql)
 - [src/export_LF_cpy.sql](./src/export_LF_cpy.sql)
-
-To activate/deactivate extraction from the LF and HF queries, or write your own, copy one of the template, edit it, and list your query in 
-- [src/extraction_query.txt](./src/extraction_query.txt)
-
+- The active queries are listed in [src/extraction_query.txt](./src/extraction_query.txt)
+  - To activate/deactivate extraction from one of the queries remove it from the list,
+  - To write your own queries, copy one of the template, edit it, and add it to the list.
 
 ## Transfer overview
 A set of powershell script to continuously encrypt and transfer data extracted from DWC.
 
 ### Requirement
-- Can run on an intermediate Windows machine 
-- gnugpg v 
-- Read from disk where the data are extracted from
-- Write on another partition
-- Public GPG key
-- Powershell, kleopatra (for key storage), gnugpg.exe
+- Run on an intermediate Windows machine
+
+**Software**
+- Powershell
+- GPG for windows: [gpg4win](https://gpg4win.org/download.html) from [GNU Privacy Guard](https://gnupg.org/index.html)
+- Certificate manager and GUI for GPG [Kleopatra](https://www.openpgp.org/software/kleopatra/)
+- A trusted public GPG key (the complementary private key will be used for decryption)
+
+**Permission**
+- Read from disk where the data are extracted from and write on another partition
+
 
 ### Usage
 ```ps
