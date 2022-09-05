@@ -78,6 +78,14 @@ For this make sure that the staff habits of entering IDs on the monitors matches
 
 In our case we rely on the lifetime ID field. The free text IDs are filtered for strings containing only numbers (see [src/msql2csv.ps1](./src/mssql2csv.ps1#L76)). Again this should be adapted to each context.
 
+### Query templates
+The template extraction queries are
+- [src/export_HF_cpy.sql](./src/export_HF_cpy.sql)
+- [src/export_LF_cpy.sql](./src/export_LF_cpy.sql)
+
+To activate/deactivate extraction from the LF and HF queries, or write your own, copy one of the template, edit it, and list your query in 
+- [src/extraction_query.txt](./src/extraction_query.txt)
+
 
 ## Transfer overview
 A set of powershell script to continuously encrypt and transfer data extracted from DWC.
