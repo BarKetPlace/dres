@@ -1,5 +1,5 @@
 # DREs - DWC Research Extraction scripts
-Data Warehouse Connect (DWC) databases are setup in hospital subnetworks inaccessible to outside research organisation subnetworks.
+Data Warehouse Connect (DWC) databases are setup in hospital subnetworks inaccessible to outside research organisation.
 Buying hardware and training IT staff to maintain and administer multiple database mirrors in different subnetworks requires investments not all hospitals can afford.
 To enable data extraction for research for a large of institution, we developed simple scripts to continuously extract, transfer and pre-process monitor data from DWC.
 
@@ -62,7 +62,6 @@ If the database authentication is delegated to the Windows authenticator on the 
 - [src/get_pat_info.ps1](./src/get_pat_info.ps1#16)
 
 
-
 ### Patient identification
 
 DWC uses an internal patient unique identifier. The scripts read the information entered in the lifetimeID field of monitors.
@@ -99,8 +98,7 @@ A set of powershell script to continuously encrypt and transfer data extracted f
   gpg --version
   v ...
   ```
-- Certificate manager and GUI for GPG [Kleopatra](https://www.openpgp.org/software/kleopatra/)
-
+- (optional) Certificate manager and GUI for GPG [Kleopatra](https://www.openpgp.org/software/kleopatra/)
 
 **Permission**
 - Read from disk where the data are extracted from and write on another partition
@@ -108,14 +106,18 @@ A set of powershell script to continuously encrypt and transfer data extracted f
 
 ### Usage
 ```ps
-.\sync_full_enc.ps1 -sourcePath "..\data" -destPath "..\remotedata" -cut "remove source file" -wh "wait x hours after completion"
+.\sync_full_enc.ps1 -sourcePath "..\data" -destPath "..\remotedata" -cut "remove source file (0 or 1)" -wh "wait x hours after completion"
 ```
 
 ### Encryption
-The files extracted so far are plain text and might contain sensitive information.
+The files extracted so far are plain text and contain sensitive information.
 We perform asymetric encryption with GPG (GNU Privacy Guard).
 The data encryption is done at [./transfer/enc_dec_gpg_data.ps1#L25](./transfer/enc_dec_gpg_data.ps1#L25).
 The patient map file is encrypted similarly at [./transfer/enc_dec_gpg.ps1#L17](./transfer/enc_dec_gpg.ps1#L17)
+
+By default, GPG compresses data prior to encryption. 
+This reduces the overload on the network due to data transfer.
+It also allows transfer through potentially unsecure links within or outside the institution. 
 
 
 ## Parsing overview
