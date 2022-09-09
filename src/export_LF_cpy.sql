@@ -3,7 +3,7 @@
 
 
 -- Quick-fix to only return patients for which ethical approval exists ("ethicalpatients")
-SELECT top 500000 convert(varchar(23), DATEADD(Day,0, val.[TimeStamp]),121) as [Timestamp],
+SELECT top 500000 convert(varchar(32), DATEADD(Day,0, val.[TimeStamp]),121) as [Timestamp],
        val.[SequenceNumber], val.[Value],
 	   map.[Id], map.[BasePhysioId], map.[PhysioId], map.[SubPhysioId], map.[Label] , map.[SubLabel],  map.[UnitLabel],pat.BedLabel,pat.ClinicalUnit
 	   --map.[IsAperiodic],map.[Validity], map.[LowerLimit], map.[UpperLimit], map.[IsManual], map.[MaxValues], map.[Scale]
