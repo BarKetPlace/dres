@@ -32,7 +32,7 @@ The pointer file content is used as a starting point the next time the patient i
 - Runs on the server with a DWC instance
 - Powershell
   - `invoke-sqlcmd`
-- Read and write to disk
+- Read and write to disk permissions
 
 ### Usage
 ```ps
