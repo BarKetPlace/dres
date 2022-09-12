@@ -11,7 +11,7 @@ See the **Requirements** subsections for details.
 
 ## LICENSE
 All hospital monitoring systems have different installations environment and specificities.
-To enable a wide usage, we believe that any variation of these scripts, required to adapt them to a new IT environment should remain open source.
+To enable a wide usage, we believe that any variation of these scripts, required to adapt them to a new IT environment, should remain open source.
 We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
 
 ## Content
