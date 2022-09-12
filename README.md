@@ -67,7 +67,8 @@ If the database authentication is delegated to the Windows authenticator on the 
 ### Patient identification
 
 DWC uses an internal patient unique identifier.
-The scripts read the information entered in the lifetimeID field of monitors.
+This internal identifier is unknown outside of the DWC and in particular to the medical staff. 
+In our hospital, the medical staff specifies an identifier for each patient that is stored in the lifetimeID field of the patient overview in DWC.
 This can be adapted to different context and medical staff practices by editing the query:
 
 - [src/patstringAttribute.sql](./src/patstringAttribute.sql)
