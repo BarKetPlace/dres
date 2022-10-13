@@ -20,6 +20,9 @@ There are three sets of scripts for different pipeline operation
 - [Transfer](./README.md#transfer-overview)
 - [Parsing](./README.md#parsing-overview)
 
+## Requirements
+- On windows it is advised to install a git client to be able to update the scripts [git](https://git-scm.com/download/win)
+
 ## Extraction overview
 A set of Powershell scripts and MSSQL queries to save data extracted from Philips Data Warehouse connect in-hospital databases as plain files to disk.
 
