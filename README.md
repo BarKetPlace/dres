@@ -34,7 +34,11 @@ The pointer file content is used as a starting point the next time the patient i
 ### Requirements 
 - Runs on the server with a DWC instance
 - Powershell
-  - `invoke-sqlcmd` ([download](https://www.powershellgallery.com/packages/Sqlserver/21.1.18256))
+  - `invoke-sqlcmd`
+    - ([download](https://www.powershellgallery.com/packages/Sqlserver/21.1.18256))
+    - rename .nupkg to .zip
+    - unzip to a local folder
+    - Run  `import-module <local_folder>`
 - Read and write to disk permissions
 
 ### Usage
