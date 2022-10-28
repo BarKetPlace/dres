@@ -34,7 +34,7 @@ The pointer file content is used as a starting point the next time the patient i
 ### Requirements 
 - Runs on the server with a DWC instance
 - Powershell
-  - `invoke-sqlcmd`
+  - `invoke-sqlcmd` ([download](https://www.powershellgallery.com/packages/Sqlserver/21.1.18256))
 - Read and write to disk permissions
 
 ### Usage
