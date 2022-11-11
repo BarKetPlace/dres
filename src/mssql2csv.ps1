@@ -61,12 +61,12 @@ while($true){
 
     # Get Patients to extract
     Get-Content "$legal_pat" | WHERE { $_ -notmatch "^#" } | Set-Content "$wd\tmp_ExtractPatients.txt"
-    $Extractpatients= Get-Content $legal_pat | WHERE { $_ -notmatch "^#" }
+    $Extractpatients= Get-Content "$wd\tmp_ExtractPatients.txt"
     $Extractpatients
-
+    
 
     For($ipat=1;$ipat -le $Extractpatients.count;$ipat++){
-        $extractpatient=(Get-Content "$wd\tmp_ExtractPatients.txt")[$ipat-1]
+        $extractpatient=$Extractpatients[$ipat-1]
         
 
         "Patient $extractpatient"
