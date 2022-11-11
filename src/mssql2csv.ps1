@@ -76,7 +76,7 @@ while($true){
         if ( !($clean_pn -eq "191212121212") -and ($clean_pn -match "^.*[0-9].*$") ) {
             $mapfile= get-content $pat_map_filename
             #$SEL = Select-String -Path $pat_map_filename -Pattern $clean_pn
-            $SEL = get-content $pat_map_filename | select-string -pattern  $clean_pn -encoding ASCII | select Line,LineNumber
+            $SEL = get-content $pat_map_filename | select-string -pattern  ";$clean_pn;" -encoding ASCII | select Line,LineNumber
             #$SEL
                             
                       
