@@ -1,4 +1,4 @@
-﻿Param(
+Param(
 [string]$gethash_cpy,
 [string]$extractpatient,
 [int]   $scramble,
@@ -18,7 +18,7 @@ Get-Content $gethash_cpy | Foreach-Object {$_ -replace '^insert into.*$', ("inse
 #"$ipat;$($result.LifetimeID);$scramble;$($result.Hash)" >> $pat_map_filename
 
 #LOG
-"$ipat_map;$($extractpatient.Substring(2,$extractpatient.Length-4));$scramble;ABCDEF;"
+#"$ipat_map;$($extractpatient.Substring(2,$extractpatient.Length-4));$scramble;ABCDEF;"
 
 # Write to pat_map_filename
 "$ipat_map;$($extractpatient.Substring(2,$extractpatient.Length-4));$scramble;ABCDEF;" >> $pat_map_filename
