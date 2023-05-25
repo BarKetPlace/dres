@@ -1,4 +1,4 @@
-﻿Param(
+Param(
 [string]$server,
 [string]$db,
 [string]$username,
@@ -6,16 +6,17 @@
 [string]$outfile
 )
 
-$query_dbpat=      "$wd\patstringAttribute.sql"
+$query_dbpat=      "$pwd\patstringAttribute.sql"
 
 Remove-Item -Path $outfile -Force
 New-Item -ItemType File $outfile | Out-Null
 
+#echo "my-invoke-sqlcmd -InputFile $query_dbpat -serverinstance $server -database $db"
 
-$result= invoke-sqlcmd  -QueryTimeout 65535 -MaxCharLength 16000 -InputFile $query_dbpat -serverinstance $server -database $db -Username $username -Password $pwd
+$result= my-invoke-sqlcmd -InputFile $query_dbpat -serverinstance $server -database $db  # -Username $username -Password $pwd
 
 $result.Value | ForEach-Object {
-
+        
         "('$_')" >> "$outfile"
 
 }
