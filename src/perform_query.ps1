@@ -1,4 +1,4 @@
-﻿Param(
+Param(
 [string]$query,
 [string]$fulldatafile,
 [string]$logfile,
@@ -9,9 +9,10 @@
 [string]$username,
 [string]$pwd
 )
+# import-module .\my-invoke-sqlcmd.ps1 -force
 
-$step_LF=500000
-$step_HF=10000
+$step_LF=5000
+$step_HF=5000
 $step=$step_HF
 if($query.Contains("LF")){
     #"yes"
@@ -32,9 +33,13 @@ $startfile=  $fulldatafile -replace '.csv','_startpoint.txt'
 
 if (Test-Path $startfile){
     $start, $start_seq, $start_date=(Get-Content $startfile).split(";")
-    $start
-    $start_seq
-    $start_date
+    # echo (Get-Content $startfile).split(";")
+    # echo "patstartdate" $patstartdate
+    
+    if ($start_date -eq '') {
+        " empty start file, replace with pat overview output !"
+        $start_date=$patstartdate
+    }
 
     $start=[int64]$start
     $start_seq=[int64]$start_seq
@@ -48,6 +53,8 @@ else {
 
 }
 
+#"$start;$start_seq;$start_date"
+
 
 $query_tr= $query -replace '.sql','_tr.sql'
 
@@ -56,13 +63,13 @@ $stop_condition=0
 while (!$stop_condition){        
     $start_date_str= $start_date -replace '[ \.:]','-'
     
-    "Start looking on $start_date_str"
+   # "Start looking on $start_date_str"  | out-file  -filepath $logfile -append
 
     $fulldatafile_tr= $fulldatafile -replace '.csv', ("_start_" + $start_date_str + "_next_" + $step + ".csv") 
-
+    
     #LOG
-    $logstr="Export " + $query + " in " + $fulldatafile_tr + "..."
-    $logstr
+    #$logstr="Export " + $query + " in " + $fulldatafile_tr + "..."
+    #$logstr  | out-file  -filepath $logfile -append
     
   
     #$start_seq
@@ -74,24 +81,30 @@ while (!$stop_condition){
         Get-Content $query | Foreach-Object {($_ -replace '__start_date__', ("'$start_date'")) -replace 'and val.TimeStamp < __end_date__','' } | Set-Content $query_tr
     }
     else {
-        Get-Content $query | Foreach-Object {($_ -replace '__start_date__', ("'$start_date'")) -replace '__end_date__', ("dateadd(hour,12,'$start_date')") } | Set-Content $query_tr
+        #Get-Content $query | Foreach-Object {($_ -replace '__start_date__', ("'$start_date'")) -replace '__end_date__', ("  dateadd(hour,12,'$start_date')") } | Set-Content $query_tr
+        Get-Content $query | Foreach-Object {($_ -replace '__start_date__', ("'$start_date'")) -replace '__end_date__', ("(dateadd(hour,4,CAST('$start_date' AS DATETIME2)) AT TIME ZONE 'Central European Standard Time')") } | Set-Content $query_tr
     }
     # 
 
+    # Some delay to avoid overwhelming the db
+    start-sleep -s 0.5
 
     #Perform extraction
     $time_start = get-date
+    #"Enter my-invoke-sqlcmd"
+    $result= my-invoke-sqlcmd -InputFile $query_tr -serverinstance $server -database $db  # -Username $username -Password $pwd 
     
-    $result= invoke-sqlcmd -MaxCharLength 16000 -InputFile $query_tr -serverinstance $server -database $db -Username $username -Password $pwd -QueryTimeout 65535
     $result | export-csv $fulldatafile_tr -notypeinformation -Delimiter ";"
     
     $time_end = get-date
     
     if ($result -eq $null){
         $stop_condition=1
+        $logstr2="results=NULL"
     }
 
     else {
+        if ( $result.TimeStamp.count -eq $result.count) {
         $start_seq_new=$result.SequenceNumber[$result.count-1]
         #(Get-content -tail 1 $fulldatafile_tr).split(";")[1]
         #$result.TimeStamp[$result.count-1]
@@ -102,38 +115,37 @@ while (!$stop_condition){
 
 
 
-        "found data between $start_date and $start_date_new : number of lines $lines"
+        $logstr2="data between $start_date and $start_date_new : number of lines $lines"
+        #"stop cond: ($start_date_new -eq $start_date) or ($lines -le $step)" | out-file  -filepath $logfile -append
 
-        
-
-        #$step
-        #($lines -le($start_seq_new -eq $start_seq) $step)
-        
-        #"stop cond: ($start_seq_new -eq $start_seq) ) or ($lines -le $step)"
-        #$stop_condition = ($start_seq_new -eq $start_seq) -or ($lines -le $step)
-        
-        "stop cond: ($start_date_new -eq $start_date) ) or ($lines -le $step)"
         $stop_condition = ((get-date $start_date_new) -eq (get-date $start_date)) -or ($lines -lt $step)
-
+        }
+        else {
+            $stop_condition= 1 -eq 1
+        }
         #"$start;$start_seq_new" > $startfile
 
     }
 
-    #LOG
-    "stop ? $stop_condition"
+    #LOGr
+    $log_time=(get-date -format "yyyy-MM-dd HH:mm:ss")
+    $outfname_split=((get-item $fulldatafile_tr).basename -split "_")
+    
+    $rate= [math]::round((Get-Item .\export_HF_cpy.sql).length/1KB / ($time_end - $time_start).Seconds,3)
 
+    "[$log_time]     "+ ($outfname_split[0])+", "+$outfname_split[2]+", "+$logstr2 + " (" + $rate+" KB/sec) "+", "+"stop ? $stop_condition" | out-file  -filepath $logfile -append 
+    
     # Limit cpu demand
     $waiting_time_s= 0.3
     Start-Sleep -s $waiting_time_s
 
-
     if (!$stop_condition){
 
         #Log
-        $date = get-date -Format "yy-MM-dd HH:mm:ss"
-        (get-date -Format "yy-MM-dd HH:mm:ss") >> $logfile
-        $logstr >> $logfile
-        "" + $result.TimeStamp[0] + ", " + $result.TimeStamp[$result.count-1] + ", " + ($time_end - $time_start).Seconds  >> $logfile
+        $date = get-date -Format "yyyy-MM-dd HH:mm:ss"
+       # (get-date -Format "yyyy-MM-dd HH:mm:ss")  | out-file  -filepath $logfile -append
+        
+        #"" + $result.TimeStamp[0] + ", " + $result.TimeStamp[$result.count-1] + ", " + ($time_end - $time_start).Seconds  | out-file  -filepath $logfile -append
         
         $start_seq=$start_seq_new
         $start_date=$start_date_new
@@ -142,12 +154,10 @@ while (!$stop_condition){
 
         $last_start_data=$start
         $start=$start+$step
-        
-        
 
     }
-    #$start
-    #$start > $startfile
+    # Free memory
+    $result=$null
 
 }
 
@@ -164,5 +174,5 @@ if ((!$last_start_data) -or ($last_start_data -eq $begining)) { #no more data ad
 
 }
 
-"Done"
+#"Done"
 
