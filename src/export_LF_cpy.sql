@@ -1,20 +1,31 @@
+declare @pid uniqueidentifier
+      , @lid nvarchar(50) 
+	  , @bed nvarchar(50)
+	  , @unit nvarchar(50) 
+	  , @admit datetimeoffset(3) 
+    
+SELECT @pid=v.patientid , @lid=v.LifetimeId, @bed=bedlabel, @unit=clinicalunit
+    -- in case there is more than one admission, you should check the date! 
+    , @admit= min(p.timestamp)
+  FROM [rs].[dbo].[v_patient_list] v
+  inner join [Philips.PatientData]._export.patient_ p
+on v.patientid = p.id 
+where LifetimeId = __clean_pn__
+  and AdmitState = 1 
+group by v.patientid , v.LifetimeId , bedlabel, clinicalunit
 
-SELECT top 5000 convert(varchar(32), DATEADD(Day,0, val.[TimeStamp]),121) as [Timestamp],
+select top 50000
+convert(varchar(32), val.[TimeStamp],121) as [Timestamp],
        val.[SequenceNumber], val.[Value],
-	   map.[Id], map.[BasePhysioId], map.[PhysioId], map.[SubPhysioId], map.[Label] , map.[SubLabel],  map.[UnitLabel],pat.BedLabel,pat.ClinicalUnit
+	   map.[Id], map.[BasePhysioId], map.[PhysioId], map.[SubPhysioId], map.[Label] , map.[SubLabel],  map.[UnitLabel]
+	   ,@bed as [BedLabel], @unit as [ClinicalUnit]
 	   --map.[IsAperiodic],map.[Validity], map.[LowerLimit], map.[UpperLimit], map.[IsManual], map.[MaxValues], map.[Scale]
-
-FROM  (select top 1 pat.*
-			from  External_Patient pat
-			join External_PatientStringAttribute psa
-			on (psa.PatientId=pat.Id)
-			where psa.Value=__clean_pn__ and pat.AdmitState=1 and pat.Timestamp <= __start_date__ order by Timestamp asc) pat,
-			[Philips.PatientData].[dbo].[External_NumericValue] val
-	  JOIN [Philips.PatientData].[dbo].[External_PatientStringAttribute] psa
-		ON (val.[PatientId] = psa.[PatientId] AND psa.Name = ('LifeTimeId'))
-	  JOIN [Philips.PatientData].[dbo].[External_Numeric] map
-	    ON map.Id = val.NumericId
-
-WHERE psa.Value=__clean_pn__ and val.Value is not NULL and val.TimeStamp>= __start_date__ and val.TimeStamp < __end_date__
+from [Philips.PatientData].[dbo].[External_Numeric] map with (nolock) 
+inner join  [Philips.PatientData].[dbo].[External_NumericValue] val with (nolock) 
+on map.id = val.NumericId 
+and map.TimeStamp >= DATEADD(hh, -2., CAST(__start_date__ AS datetimeoffset(3))) 
+     and map.TimeStamp <  DATEADD(hh,  2., __end_date__) 
+and val.TimeStamp >= __start_date__
+	and val.TimeStamp < __end_date__	
+where patientid = @pid 
 order by Timestamp ASC
---OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY 
