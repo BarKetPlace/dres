@@ -15,6 +15,10 @@ All hospital monitoring systems have different installations environment and spe
 To enable a wide usage, we believe that any variation of these scripts, required to adapt them to a new IT environment, should remain open source.
 We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
 
+## Authors
+Antoine Honoré
+Work done while collaborating with Eric Herlenius at Karolinska Institutet
+
 ## Content
 There are three sets of scripts for different pipeline operation
 - [Extraction](./README.md#extraction-overview)
@@ -132,7 +136,3 @@ It also allows transfer through potentially unsecure links within or outside the
 
 ## Parsing overview
 
-
-# Authors
-Antoine Honoré
-Work done while collaborating with Eric Herlenius at Karolinska Institutet
