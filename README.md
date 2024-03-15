@@ -131,3 +131,8 @@ It also allows transfer through potentially unsecure links within or outside the
 
 
 ## Parsing overview
+
+
+# Authors
+Antoine Honoré
+Work done while collaborating with Eric Herlenius at Karolinska Institutet
