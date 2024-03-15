@@ -17,6 +17,7 @@ We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Vers
 
 ## Authors
 Antoine Honoré
+
 Work done while collaborating with Eric Herlenius at Karolinska Institutet
 
 ## Content
