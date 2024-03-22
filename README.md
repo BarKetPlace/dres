@@ -16,9 +16,7 @@ To enable a wide usage, we believe that any variation of these scripts, required
 We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
 
 ## Authors
-Antoine Honoré
-
-Work done while collaborating with Eric Herlenius at Karolinska Institutet
+Antoine Honoré. Work done while working in Eric Herlenius research group at Karolinska Institutet
 
 ## Content
 There are three sets of scripts for different pipeline operation
