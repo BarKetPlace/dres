@@ -16,7 +16,7 @@ To enable a wide usage, we believe that any variation of these scripts, required
 We therefore chose to license this project under GNU GENERAL PUBLIC LICENSE Version 3.
 
 ## Authors
-Antoine Honoré <honore@kth.se>. Work done while working in Eric Herlenius <eric.herlenius@ki.se> research group at Karolinska Institutet.
+Antoine Honoré (<honore@kth.se>). Work done while working in Eric Herlenius (<eric.herlenius@ki.se>) research group at Karolinska Institutet.
 We received precious help from Pheng Ho at Philips for optimizing the SQL queries.
 
 ## Content
