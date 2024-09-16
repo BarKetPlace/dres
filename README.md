@@ -22,7 +22,6 @@ We received precious help from Pheng Ho at Philips for optimizing the SQL querie
 There are three sets of scripts for different pipeline operation
 - [Extraction](./README.md#extraction-overview)
 - [Transfer](./README.md#transfer-overview)
-- [Parsing](./README.md#parsing-overview) (not yet included in the repo)
 
 ## Requirements
 - If you have internet access, it is advised to install a git client to be able to update the scripts [git](https://git-scm.com/download/win)
