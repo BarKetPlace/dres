@@ -1,10 +1,9 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # DREs - DWC Research Extraction scripts
-Data Warehouse Connect (DWC) databases are setup in hospital subnetworks inaccessible to outside research organisations.
-For security and redundancy, the data must be scattered and mirrored in separate subnetworks.
-Buying hardware and training IT staff to maintain and administer multiple database mirrors in different subnetworks requires investments not all hospitals can afford.
-To enable data extraction for research for a large number of institutions, we developed simple scripts to continuously extract, transfer and pre-process monitor data from DWC.
+Data Warehouse Connect (DWC) databases are setup in hospital subnetworks inaccessible to outside research organisations for security reasons. 
+Buying hardware and training inhospital IT staff that can maintain and administrate these databases requires investments not all hospitals can afford. This in turn limits the research that can be performed on the data.
+To enable data extraction for research for the large number of institutions that use DWC, we developed simple scripts to continuously extract, transfer monitor data from DWC.
 
 The scripts are designed to be robust to network interruption and un-expected machine shutdown.
 It is assumed that standard Windows software are provided on the database servers and intermediade machines. 
